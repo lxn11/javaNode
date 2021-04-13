@@ -228,6 +228,8 @@ Windows平台下下载：http://dev.mysql.com/downloads/mysql
 show databases;
 ```
 
+<img src="images/image-20201017174333989.png" alt="image-20201017174333989"  />![image-20201017174500489](images/image-20201017174500489.png)
+
 
 
 ### 2.使用数据库
@@ -238,7 +240,7 @@ show databases;
 use databaseName
 ```
 
-
+![image-20201017174500489](images/image-20201017174500489.png)
 
 
 
@@ -747,7 +749,7 @@ SELECT * FROM employees WHERE   job_id ='AD_VP' AND salary >24000 OR manager_id 
 
 
 
-> ###### 不适用in
+> ###### 不使用in
 
 
 
