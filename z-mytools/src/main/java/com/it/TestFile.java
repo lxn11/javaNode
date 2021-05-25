@@ -10,7 +10,7 @@ public class TestFile {
         while (bufferedReader.ready()){
             String trim = bufferedReader.readLine().trim();
             System.out.println(trim);
-             outStre( getInputStream("C:\\Users\\admin\\Desktop\\学习笔记\\images\\"+trim),trim);
+             outStre( getInputStream("F:\\学习资料\\知识点\\个人笔记-write\\Netty.assets\\"+trim),trim);
             System.out.println("x");
         }
     }
@@ -25,7 +25,7 @@ public class TestFile {
 
 
     public static void  outStre(InputStream in,String path) throws Exception {
-        FileOutputStream out = new FileOutputStream("E:\\note\\SpringBoot\\images\\"+path);
+        FileOutputStream out = new FileOutputStream("E:\\note\\javase\\images\\"+path);
         int len = -1;
         byte[] b = new byte[1024];
         while ((len = in.read(b)) != -1) {
