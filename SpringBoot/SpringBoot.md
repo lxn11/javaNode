@@ -1737,7 +1737,7 @@ SpringBoot默认会在底层配好所有的组件。但是如果用户自己配�
 
 
 
-## 4.10：总结
+## 4.10：实战案例
 
 
 
@@ -2554,7 +2554,7 @@ public class WebMvcAutoConfiguration {
 //ListableBeanFactory beanFactory Spring的beanFactory
 //HttpMessageConverters 找到所有的HttpMessageConverters
 //ResourceHandlerRegistrationCustomizer 找到 资源处理器的自定义器。=========
-//DispatcherServletPath  
+//DispatcherServletPath  DispatcherServlet能处理的路径
 //ServletRegistrationBean   给应用注册Servlet、Filter....
 @Configuration(proxyBeanMethods = false)
 @Import(EnableWebMvcConfiguration.class)
