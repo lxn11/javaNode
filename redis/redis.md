@@ -1430,14 +1430,20 @@ list类型经常会被用于消息队列的服务，以完成多程序之间的�
 
 
 
-| 命令   | 简介                                                         | 语法                      |
-| ------ | ------------------------------------------------------------ | ------------------------- |
-| lpush  | 列表左边添加**一个或多个值**,`key`不存在则创建               | LPUSH key value1 [value2] |
-| rpush  | 列表右边添加**一个或多个值**,`key`不存在则创建               | RPUSH key value1 [value2] |
-| lpushx | 列表左边添加**一个值**,当` key `不存在时，` lpushx `命令什么也不做 | LPUSHX key value          |
-| rpushx | 列表右边添加**一个值**当 `key `不存在时， `rpushx`命令什么也不做 | RPUSHX key value          |
-| lpop   |                                                              |                           |
-| rpop   |                                                              |                           |
+| 命令      | 简介                                                         | 语法                      |
+| --------- | ------------------------------------------------------------ | ------------------------- |
+| lpush     | 列表左边添加**一个或多个值**,`key`不存在则创建               | LPUSH key value1 [value2] |
+| rpush     | 列表右边添加**一个或多个值**,`key`不存在则创建               | RPUSH key value1 [value2] |
+| lpushx    | 列表左边添加**一个值**,当` key `不存在时，` lpushx `命令什么也不做 | LPUSHX key value          |
+| rpushx    | 列表右边添加**一个值**当 `key `不存在时， `rpushx`命令什么也不做 | RPUSHX key value          |
+| lpop      | 移除左边并返回列表 `key` 的头元素。                          | LPOP key                  |
+| rpop      | 移除右边并返回列表 `key` 的头元素。                          | RPOP key                  |
+| rpoplpush | 从key1列表右边吐出一个值，插到key2列表左边。                 | rpoplpush key1  key2      |
+| lrange    | 获取列表指定范围内的元素，但不删除元素，0左边第一个，-1右边第一个，（`0` `-1`表示获取所有） | LRANGE key start stop     |
+| lindex    | 通过索引获取列表中的元素,左边开始是1，右边开始是-1           | LINDEX key index          |
+| llen      | 获取列表长度                                                 | LLEN key                  |
+| lrem      | **移除列表元素**<br>1.count > 0 : 从左到右，移除与 VALUE 相等的元素，数量为 COUNT 。<br/>2.count < 0 : 从右到左，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值。<br/>3.count = 0 : 移除表中所有与 VALUE 相等的值。 | LREM key count value      |
+| lset      | 将列表 `key` 下标为 `index` 的元素的值设置为 `value` 。      | LSET key index value      |
 
 
 
