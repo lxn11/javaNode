@@ -92,11 +92,240 @@ https://github.com/springfox/springfox
 
 
 
+# 二、HelloWorld
 
 
 
 
 
+## 1.pom
+
+
+
+````java
+<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+<dependency>
+   <groupId>io.springfox</groupId>
+   <artifactId>springfox-swagger2</artifactId>
+   <version>2.9.2</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+<dependency>
+   <groupId>io.springfox</groupId>
+   <artifactId>springfox-swagger-ui</artifactId>
+   <version>2.9.2</version>
+</dependency>
+````
+
+
+
+## 2.controller
+
+
+
+```java
+@RestController
+public class HelloController {
+
+    @GetMapping
+    public String get(){
+        return "hello world";
+    }
+}
+```
+
+
+
+## 3.配置类
+
+
+
+```java
+/**
+ * swagger配置
+ */
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+}
+```
+
+
+
+## 4.测试
+
+
+
+游览器访问：http://localhost:8080/swagger-ui.html
+
+<img src="images/image-20210712155714036.png" alt="image-20210712155714036" style="zoom:80%;" />
+
+
+
+# 三、配置类模板
+
+
+
+```java
+
+/**
+ * swagger配置
+ */
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+    /**
+     * 创建API应用
+     * apiInfo() 增加API相关信息
+     * 通过select()函数返回一个ApiSelectorBuilder实例,用来控制哪些接口暴露给Swagger来展现，
+     * 本例采用指定扫描的包路径来定义指定要建立API的目录。
+     *
+     * @return
+     */
+    @Bean
+    public Docket createRestApi(){
+        //版本类型是swagger2
+        return new Docket(DocumentationType.SWAGGER_2)
+                //通过调用自定义方法apiInfo，获得文档的主要信息
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.controller"))//扫描该包下面的API注解
+                .paths(PathSelectors.any())
+                .build();
+    }
+    /**
+     * 创建该API的基本信息（这些基本信息会展现在文档页面中）
+     * 访问地址：http://项目实际地址/swagger-ui.html
+     * @return
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("使用Swagger2 构建RESTful APIS - zy") //接口管理文档首页显示
+                .description("zy - Swagger使用演示")//API的描述
+                .termsOfServiceUrl("www.footmark.top")//网站url等
+                .version("1.0")
+                .build();
+    }
+}
+
+```
+
+
+
+
+
+<img src="images/image-20210712160610919.png" alt="image-20210712160610919" style="zoom:80%;" />
+
+
+
+# 四、常用注解
+
+
+
+## 4.1：简介
+
+
+
+Swagger的所有注解定义在io.swagger.annotations包下
+
+下面列一些经常用到的，未列举出来的可以另行查阅说明：
+
+| Swagger注解                                            | 简单说明                                             |
+| ------------------------------------------------------ | ---------------------------------------------------- |
+| @Api(tags = "xxx模块说明")                             | 作用在模块类上                                       |
+| @ApiOperation("xxx接口说明")                           | 作用在接口方法上                                     |
+| @ApiModel("xxxPOJO说明")                               | 作用在模型类上：如VO、BO                             |
+| @ApiModelProperty(value = "xxx属性说明",hidden = true) | 作用在类方法和属性上，hidden设置为true可以隐藏该属性 |
+| @ApiParam("xxx参数说明")                               | 作用在参数、方法和字段上，类似@ApiModelProperty      |
+
+我们也可以给请求的接口配置一些注释
+
+```java
+@ApiOperation("xm的接口")
+@PostMapping("/xm")
+@ResponseBody
+public String kuang(@ApiParam("这个名字会被返回")String username){
+   return username;
+}
+```
+
+
+
+<img src="images/image-20210712161007699.png" alt="image-20210712161007699" style="zoom:80%;" />
+
+
+
+# 五、皮肤
+
+
+
+我们可以导入不同的包实现不同的皮肤定义：
+
+## 5.1：默认
+
+
+
+1、默认的  **访问 http://localhost:8080/swagger-ui.html**
+
+```java
+<dependency>
+   <groupId>io.springfox</groupId>
+   <artifactId>springfox-swagger-ui</artifactId>
+   <version>2.9.2</version>
+</dependency>
+```
+
+
+
+## 5.2：bootstrap-ui
+
+
+
+2、bootstrap-ui  **访问 http://localhost:8080/doc.html**
+
+```java
+<!-- 引入swagger-bootstrap-ui包 /doc.html-->
+<dependency>
+   <groupId>com.github.xiaoymin</groupId>
+   <artifactId>swagger-bootstrap-ui</artifactId>
+   <version>1.9.1</version>
+</dependency>
+```
+
+
+
+## 5.3：Layui-ui
+
+
+
+Layui-ui  **访问 http://localhost:8080/docs.html**
+
+```java
+<!-- 引入swagger-ui-layer包 /docs.html-->
+<dependency>
+   <groupId>com.github.caspar-chen</groupId>
+   <artifactId>swagger-ui-layer</artifactId>
+   <version>1.1.3</version>
+</dependency>
+```
+
+
+
+## 5.4：mg-ui
+
+
+
+4、mg-ui  **访问 http://localhost:8080/document.html**
+
+```java
+<!-- 引入swagger-ui-layer包 /document.html-->
+<dependency>
+   <groupId>com.zyplayer</groupId>
+   <artifactId>swagger-mg-ui</artifactId>
+   <version>1.0.6</version>
+</dependency>
+```
 
 
 
