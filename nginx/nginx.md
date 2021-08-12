@@ -1975,6 +1975,21 @@ No5:被默认的default_server处理，如果没有指定默认找第一个serve
 
 uri变量是待匹配的请求字符串，可以不包含正则表达式，也可以包含正则表达式，那么nginx服务器在搜索匹配location的时候，是先使用不包含正则表达式进行匹配，找到一个匹配度最高的一个，然后在通过包含正则表达式的进行匹配，如果能匹配到直接访问，匹配不到，就使用刚才匹配度最高的那个location来处理请求。
 
+| 模式                | 含义                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| location = /uri     | = 表示精确匹配                                               |
+| location ^~ /uri    | ^ 进行前缀匹配，~ 表示区分大小写                             |
+| location ~ pattern  | ~ 区分大小写的匹配                                           |
+| location ~* pattern | ~* 不区分大小写的匹配                                        |
+| location /uri       | 不带任何修饰符，也表示前缀匹配，但是在正则匹配之后           |
+| location /          | 通用匹配，任何未匹配到其它 location 的请求都会匹配到，相当于 switch 中的 default |
+| location !~         | 区分大小写不匹配                                             |
+| location !~*        | 不区分大小写不匹配                                           |
+
+
+
+
+
 ### 2.属性介绍
 
 
@@ -2066,6 +2081,61 @@ server {
 		default_type text/plain;
 		return 200 "access success";
 	}
+}
+```
+
+
+
+
+
+### 3.使用示例
+
+
+
+![20190704183426871](images/20190704183426871.png)
+
+
+
+```java
+# t.c => /index
+location = / {
+	proxy_pass http://127.0.0.1:8888/index;
+}
+
+# http://t.c/static/react.development.js => /test-nginx/react.development.js
+location ^~ /static/ {
+ 	root /home/uftp/test-nginx/;
+}
+
+# http://t.c/bizhi1.jpg => /test-nginx/static/assets/bizhi1.jpg
+location ~* \.(gif|jpg|jpeg|css|js|ico)$ {
+	root /home/uftp/test-nginx/static/assets/;
+}
+
+# http://t.c/bizhi_sensitive.png 命中 casesensitive/bizhi_sensitive.png
+location ~ \.png$ {
+	root /home/uftp/test-nginx/static/casesensitive/;
+}
+
+# http://t.c/api/plmnji => http://127.0.0.1:8888/apitt/plmnji
+location ^~ /api {
+	proxy_pass http://127.0.0.1:8888/apitt;
+}
+
+# http://t.c/test/react/react.dev.js => http://127.0.0.1:8888/testreact/react.dev.js 不会匹配下面的规则，被上面的规则优先匹配了
+# http://t.c/test/react/akkk => http://127.0.0.1:8888/testreact/akkk
+location ^~ /test/react {
+	proxy_pass http://127.0.0.1:8888/testreact;
+}
+
+# http://t.c/test/qwerty => http://127.0.0.1:8888/test/qwerty
+location ^~ /test {
+	proxy_pass http://127.0.0.1:8888/test;
+}
+
+# http://t.c/vue/dasdas => http://127.0.0.1:8888/thisisvue/dasdas
+location  /vue {
+	proxy_pass http://127.0.0.1:8888/thisisvue;
 }
 ```
 
