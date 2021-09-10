@@ -3907,6 +3907,93 @@ redis.conf中的参数 cluster-require-full-coverage
 
 
 
+## 11.10：Redis集群设置密码
+
+
+
+### 1.方式一
+
+
+
+修改所有Redis集群中的redis.conf文件加入： 
+
+```JAVA
+masterauth passwd123 
+requirepass passwd123 
+```
+
+> 说明：这种方式需要重新启动各节点
+
+
+
+### 2.方式二
+
+
+
+进入各个实例进行设置：
+
+```java
+./redis-cli -c -p 7000 
+config set masterauth passwd123 
+config set requirepass passwd123 
+config rewrite 
+```
+
+> 之后分别使用./redis-cli -c -p 7001，./redis-cli -c -p 7002…..命令给各节点设置上密码。
+>
+> <font color='red'>注意：</font>各个节点密码都必须一致，否则Redirected就会失败， 推荐这种方式，这种方式会把密码写入到redis.conf里面去，且不用重启。
+>
+> 用方式二修改密码，./redis-trib.rb check 10.104.111.174:6379执行时可能会报[ERR] Sorry, can't connect to node 10.104.111.174:6379，因为6379的redis.conf没找到密码配置。
+
+
+
+### 3.注意
+
+
+
+设置密码之后如果需要使用redis-trib.rb的各种命令 
+如：./redis-trib.rb check 127.0.0.1:7000，则会报错ERR] Sorry, can’t connect to node 127.0.0.1:7000 
+解决办法：vim /usr/local/rvm/gems/ruby-2.3.3/gems/redis-4.0.0/lib/redis/client.rb，然后修改passord
+
+```java
+class Client
+    DEFAULTS = {
+      :url => lambda { ENV["REDIS_URL"] },
+      :scheme => "redis",
+      :host => "127.0.0.1",
+      :port => 6379,
+      :path => nil,
+      :timeout => 5.0,
+      :password => "passwd123",
+      :db => 0,
+      :driver => nil,
+      :id => nil,
+      :tcp_keepalive => 0,
+      :reconnect_attempts => 1,
+      :inherit_socket => false
+    }
+```
+
+
+
+**注意：client.rb路径可以通过find命令查找：find / -name 'client.rb'**
+
+
+
+
+
+### 4.带密码访问集群
+
+
+
+```java
+./redis-cli -c -p 7000 -a passwd123
+在springboot项目中还需要设置application.properties中需要设置redisde的密码
+spring.redis.password=xxxxx
+```
+
+
+
 # 附:Jedis
 
 
