@@ -3805,8 +3805,7 @@ redis-cli --cluster create --cluster-replicas 1 192.168.244.100:6379 192.168.244
 
 
 ```java
-redis-cli -c -p 端口
-cluster nodes
+redis-cli -h 端口 -c -p 端口 cluster nodes
 ```
 
 
@@ -3955,6 +3954,8 @@ config rewrite
 如：./redis-trib.rb check 127.0.0.1:7000，则会报错ERR] Sorry, can’t connect to node 127.0.0.1:7000 
 解决办法：vim /usr/local/rvm/gems/ruby-2.3.3/gems/redis-4.0.0/lib/redis/client.rb，然后修改passord
 
+![img](images/1501092-20200315195705443-1007771634.png)
+
 ```java
 class Client
     DEFAULTS = {
@@ -3971,7 +3972,7 @@ class Client
       :tcp_keepalive => 0,
       :reconnect_attempts => 1,
       :inherit_socket => false
-    }
+    }  
 ```
 
 
@@ -3987,7 +3988,7 @@ class Client
 
 
 ```java
-./redis-cli -c -p 7000 -a passwd123
+./redis-cli -c -p 7000 -a  passwd123
 在springboot项目中还需要设置application.properties中需要设置redisde的密码
 spring.redis.password=xxxxx
 ```
