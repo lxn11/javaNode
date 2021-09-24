@@ -3468,7 +3468,7 @@ CAS指令在Intel CPU上称为CMPXCHG指令，**它的作用是将指定内存�
 
 在操作系统中，线程是个独立的个体，但是在线程执行过程中，如果处理同一个业务逻辑，可能会产生资源争抢，导致并发问题，通常使用`互斥`锁`来`控制该逻辑。但是在还有这样一类场景，任务`执行`是有顺序控制的，例如常见的报表数据生成：
 
-![image-20200930091933873](netty-emp.assets/image-20200930091933873.png)
+<img src="images/image-20210924182034733.png" alt="image-20210924182034733" style="zoom:80%;" />
 
 - 启动数据分析任务，生成报表数据；
 - 报表数据存入指定位置数据容器；
@@ -5754,7 +5754,7 @@ style mt1 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5,5
 
 
 + `特点:`
-    + ** 核心线程数 == 最大线程数（没有救急线程被创建），因此也无需超时时间**
+    + **核心线程数 == 最大线程数（没有救急线程被创建），因此也无需超时时间**
     + **阻塞队列是无界的，可以放任意数量的任务**
 
 **评价** 适用于任务量已知，相对耗时的任务
@@ -6195,7 +6195,7 @@ boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedExceptio
 
 
 
-### 9.newSingleThreadExecutor
+### 9.newScheduledThreadPool
 
 
 

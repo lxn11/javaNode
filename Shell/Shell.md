@@ -335,15 +335,365 @@ world
 
 
 
+```java
+用法1：用户自己定义变量值
+[root@localhost ~]# read name
+harry
+[root@localhost ~]# echo $name
+harry
+[root@localhost ~]# read -p "Input your name:" name
+Input your name:tom
+[root@localhost ~]# echo $name
+tom
+
+用法2：变量值来自文件
+[root@localhost ~]# cat 1.txt 
+10.1.1.1 255.255.255.0
+
+[root@localhost ~]# read ip mask < 1.txt 
+[root@localhost ~]# echo $ip
+10.1.1.1
+[root@localhost ~]# echo $mask
+255.255.255.0
+```
+
+
+
+## 2.5：定义有类型的变量-declar
+
+
+
+### 1.简介
+
+
+
+**目的：**给变量做一些限制，固定变量的类型，比如：整型、只读
+
+**用法：**`declare 选项 变量名=变量值`
+
+**常用选项：**
+
+| 选项   | 释义                       | 举例                                             |
+| ------ | -------------------------- | ------------------------------------------------ |
+| ==-i== | 将变量看成整数             | `declare -i A=123`                               |
+| ==-r== | 定义只读变量               | `declare -r B=hello`                             |
+| -a     | 定义普通数组；查看普通数组 |                                                  |
+| -A     | 定义关联数组；查看关联数组 |                                                  |
+| -x     | 将变量通过环境导出         | `declare -x AAA=123456 `等于` export AAA=123456` |
+
+
+
+### 2.举例说明
+
+
+
+```java
+[root@localhost ~]# declare -i A=123
+[root@localhost ~]# echo $A
+123
+[root@localhost ~]# A=hello
+[root@localhost ~]# echo $A
+0
+
+[root@localhost ~]# declare -r B=hello
+[root@localhost ~]# echo $B
+hello
+[root@localhost ~]# B=world
+-bash: B: readonly variable
+[root@localhost ~]# unset B
+-bash: unset: B: cannot unset: readonly variable
+```
+
+
+
+## 2.6：变量分类
+
+
+
+### 1.本地变量
+
+
+
+当前用户自定义的变量。当前进程中有效，其他进程及当前进程的子进程无效。
+
+
+
+### 2.环境变量
+
+
+
+- **环境变量**：当前进程有效，并且能够被**子进程**调用。
+	- `env`查看当前用户的环境变量
+	- `set`查询当前用户的所有变量(临时变量与环境变量) 
+	- `export 变量名=变量值`    或者  `变量名=变量值；export 变量名`
+
+~~~shell
+[root@localhost ~]# export A=hello		临时将一个本地变量（临时变量）变成环境变量
+[root@localhost ~]# env|grep ^A
+A=hello
+
+永久生效：
+vim /etc/profile 或者 ~/.bashrc
+export A=hello
+或者
+A=hello
+export A
+
+说明：系统中有一个变量PATH，环境变量
+export PATH=/usr/local/mysql/bin:$PATH
+~~~
+
+
+
+### 3.全局变量
 
 
 
 
+- **全局变量**：全局所有的用户和程序都能调用，且继承，新建的用户也默认能调用.
+
+- **解读相关配置文件**
+
+| 文件名               | 说明                                   | 备注                                                       |
+| -------------------- | -------------------------------------- | ---------------------------------------------------------- |
+| $HOME/.bashrc        | 当前用户的bash信息,**用户登录时读取**  | 定义别名、umask、函数等                                    |
+| $HOME/.bash_profile  | 当前用户的环境变量，**用户登录时读取** |                                                            |
+| $HOME/.bash_logout   | **当前用户退出**最后读取               | 定义用户退出时执行的程序等                                 |
+| /etc/bashrc          | 全局的bash信息，**所有用户都生效**     |                                                            |
+| /etc/profile         | 全局环境变量信息                       | 系统和所有用户都生效                                       |
+| \$HOME/.bash_history | 用户的历史命令                         | history -w   保存历史记录         history -c  清空历史记录 |
+
+**说明：**以上文件修改后，都需要重新==source==让其生效或者退出重新登录。
+
+- **用户登录**系统**读取**相关==文件的顺序==
+
+	1. `/etc/profile`
+	2. `$HOME/.bash_profile`
+	3. `$HOME/.bashrc`
+	4. `/etc/bashrc`
+	5. `$HOME/.bash_logout`
+
+	
+
+## 2.7：变量分类-系统变量（传参）
+
+- **系统变量(内置bash中变量)** ： shell本身已经固定好了它的名字和作用.
 
 
 
+| 内置变量                                                     | 含义                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| $?                                                           | 上一条命令执行后返回的状态；状态值为0表示执行正常，==非0==表示执行异常或错误 |
+| $0                                                           | 当前执行的程序或脚本名                                       |
+| $#                                                           | 脚本后面接的参数的个数                                       |
+| $*                                                           | 脚本后面所有参数，参数当成一个整体输出，每一个变量参数之间以空格隔开 |
+| $@                                                           | 脚本后面所有参数，参数是独立的，也是全部输出                 |
+| `\$1\~$9 `| 脚本后面的位置参数，`$1`表示第1个位置参数，依次类推 |                                                              |
+| \${10}\~${n}                                                 | 扩展位置参数,第10个位置变量必须用{}大括号括起来(2位数字以上扩起来)，就是我们的传参 |
+| $$                                                           | 当前所在进程的进程号，如`echo $$`                            |
+| $！                                                          | 后台运行的最后一个进程号 (当前终端）                         |
+| !$                                                           | 调用最后一条命令历史中的参数                                 |
+
+- 进一步了解位置参数`$1~${n}`
+
+```java
+# !/bin/bash
+# hell内置变量中的位置参数含义
+echo "\$0 = $0"
+echo "\$# = $#"
+echo "\$* = $*"
+echo "\$@ = $@"
+echo "\$1 = $1" 
+echo "\$2 = $2" 
+echo "\$3 = $3" 
+echo "\$11 = ${11}" 
+echo "\$12 = ${12}" 
+```
+
+<img src="images/image-20210913164736315.png" alt="image-20210913164736315" style="zoom:80%;" />
 
 
+
+- 进一步了解\$*和​\$@的区别
+
+	- `$*`：表示将变量看成一个整体
+	- `$@`：表示变量是独立的
+
+```java
+#!/bin/bash
+for i in "$@"
+do
+echo $i
+done
+
+echo "======我是分割线======="
+
+for i in "$*"
+do
+echo $i
+done
+
+[root@MissHou ~]# bash 3.sh a b c
+a
+b
+c
+======我是分割线=======
+a b c
+
+```
+
+
+
+## 2.7：运算
+
+
+
+### 1.简介
+
+
+
+Shell 和其他编程语言一样，支持多种运算符，包括：
+
+- 算数运算符
+- 关系运算符
+- 布尔运算符
+- 字符串运算符
+- 文件测试运算符
+
+原生bash不支持简单的数学运算，但是可以通过其他命令来实现，例如 awk 和 expr，expr 最常用。
+
+expr 是一款表达式计算工具，使用它能完成表达式的求值操作。
+
+
+
+## 1. 基本运算符
+
+
+
+原生bash不支持简单的数学运算，但是可以通过其他命令来实现，例如 awk 和 expr，expr 最常用。
+
+expr 是一款表达式计算工具，使用它能完成表达式的求值操作。
+
+
+
+| 表达式                    | 举例                            |
+| ------------------------- | ------------------------------- |
+| `$((  )) | echo $((1+1))` | 加减                            |
+| `$[ ]    | echo $[10-5]`  | 乘除                            |
+| `expr`                    | expr 10 / 5                     |
+| `let`                     | n=1;let n+=1  等价于  let n=n+1 |
+
+
+
+> 两点注意：
+>
+> - 表达式和运算符之间要有空格，例如 2+2 是不对的，必须写成 2 + 2，这与我们熟悉的大多数编程语言不一样。
+> - 完整的表达式要被 **<font color='red'> ``</font>**  包含，注意这个字符不是常用的单引号，在 Esc 键下边。
+
+
+
+## 2.了解i++和++i
+
+- 对变量的值的影响
+
+```java
+[root@localhost ~]# i=1
+[root@localhost ~]# let i++
+[root@localhost ~]# echo $i
+2
+[root@localhost ~]# j=1
+[root@localhost ~]# let ++j
+[root@localhost ~]# echo $j
+2
+```
+
+- 对==表达式==的值的影响
+
+```java
+[root@localhost ~]# unset i j
+[root@localhost ~]# i=1;j=1
+[root@localhost ~]# let x=i++         先赋值，再运算
+[root@localhost ~]# let y=++j         先运算，再赋值
+[root@localhost ~]# echo $i
+2
+[root@localhost ~]# echo $j
+2
+[root@localhost ~]# echo $x
+1
+[root@localhost ~]# echo $y
+2
+```
+
+
+
+## 3.四则运算
+
+
+
+下表列出了常用的算术运算符，假定变量 a 为 10，变量 b 为 20：
+
+| 运算符 | 说明                                          | 举例                          |
+| :----- | :-------------------------------------------- | :---------------------------- |
+| +      | 加法                                          | `expr $a + $b` 结果为 30。    |
+| -      | 减法                                          | `expr $a - $b` 结果为 -10。   |
+| *      | 乘法                                          | `expr $a \* $b` 结果为  200。 |
+| /      | 除法                                          | `expr $b / $a` 结果为 2。     |
+| %      | 取余                                          | `expr $b % $a` 结果为 0。     |
+| =      | 赋值                                          | a=$b 将把变量 b 的值赋给 a。  |
+| ==     | 相等。用于比较两个数字，相同则返回 true。     | [ $a == $b ] 返回 false。     |
+| !=     | 不相等。用于比较两个数字，不相同则返回 true。 | [ $a != $b ] 返回 true。      |
+
+> **注意：**条件表达式要放在方括号之间，并且要有空格，例如: **`[$a==$b]`** 是错误的，必须写成 **`[ $a == $b ]`**。
+>
+> 实例
+>
+> 算术运算符实例如下：
+
+```java
+a=10
+b=20
+
+val=`expr $a + $b`
+echo "a + b : $val"
+
+val=`expr $a - $b`
+echo "a - b : $val"
+
+val=`expr $a \* $b`
+echo "a * b : $val"
+
+val=`expr $b / $a`
+echo "b / a : $val"
+
+val=`expr $b % $a`
+echo "b % a : $val"
+
+if [ $a == $b ]
+then
+   echo "a 等于 b"
+fi
+if [ $a != $b ]
+then
+   echo "a 不等于 b"
+fi
+```
+
+输出结果
+
+```java
+a + b : 30
+a - b : -10
+a * b : 200
+b / a : 2
+b % a : 0
+a 不等于 b
+```
+
+> **注意：**
+>
+> - 乘号(*)前边必须加反斜杠(\)才能实现乘法运算；
+> - if...then...fi 是条件语句，后续将会讲解。
+> - 在 MAC 中 shell 的 expr 语法是：**$((表达式))**，此处表达式中的 "*" 不需要转义符号 "\" 。
 
 
 
