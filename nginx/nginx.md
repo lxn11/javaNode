@@ -847,7 +847,7 @@ cd /usr/local/nginx/sbin
 ./nginx -t    
 ```
 
-<img src="images/image-20210624175902494.png" alt="image-20210624175902494" style="zoom:80%;" />
+<img src=".images/image-20210624175902494.png" alt="image-20210624175902494" style="zoom:80%;" />
 
 
 
