@@ -1,17 +1,17 @@
 # Oracle11G安装
 
 
- 
+
 ## preinstalloracle.sh
 
 
 
 ```java
- #!/bin/bash
+ #!/bin/bash 
 #以root用户运行
 #注意修改第三行的ip为自己的ip地址
 
-echo "192.168.244.200 orcl orcl" >> /etc/hosts
+echo "192.168.100.100 orcl orcl" >> /etc/hosts
 cat >> /etc/sysconfig/network <<EOF
 network=yes
 hostname=orcl
@@ -170,11 +170,12 @@ lsnrctl status
 	
 	# 如果上面命令执行失败，使用
 	./runInstaller -silent -responseFile /home/oracle/database/response/db_install.rsp  -ignorePrereq
-	
+	#出现以下错误  先运行 unset DISPLAY
+	EXception in thread "main" java.lang.NoClassDefFoundError
 	```
-
+	
 	> ./runInstaller -silent -responseFile /home/oracle/database/response/db_install.rsp  #可能会包INS-13014目标不满足一些可选要求，查看日志，如果是pdksh缺少的话，可以忽略直接进行下一步。没有异常，不报错的话会在三两分钟后出现使用root用户执行orainstRoot.sh和root.sh的提示
-
+	
 	执行结果截图，需要等到最后那行提示success才可以回车，大概需要三四分钟
 
 <img src="images/image-20211009200915869.png" alt="image-20211009200915869" style="zoom:80%;" />

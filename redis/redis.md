@@ -1977,7 +1977,7 @@ Redis GEO 操作方法有：
 
 
 
-### 5.database
+### 5.databases
 
 
 

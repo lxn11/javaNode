@@ -46,91 +46,18 @@ NETMASK=255.255.255.0
 DNS1=192.168.244.2
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.png
-.png
-
+# 阿里巴巴矢量图标库批量下载
+
+
+https://www.iconfont.cn/
+
+```javascript
+var span = document.querySelectorAll('.icon-cover');
+for (var i = 0, len = span.length; i < len; i++) {
+    if (0<=i && i < 20){
+        console.log(span[i].querySelector('span').click());
+    } 
+}
+```
 
 
