@@ -22,13 +22,9 @@ MyBatis-Plus (opens new window)（简称 MP）是一个 MyBatis (opens new windo
 
 
 
-官网：https://mybatis.plus/ 或 https://mp.baomidou.com/
+官网： https://mp.baomidou.com/
 
-**代码以及文档**
 
-文档地址：https://mybatis.plus/guide/
-
-源码地址：https://github.com/baomidou/mybatis-plus
 
 <img src="images/image-20210816174059113.png" alt="image-20210816174059113" style="zoom:80%;" />
 
@@ -63,6 +59,40 @@ MyBatis-Plus (opens new window)（简称 MP）是一个 MyBatis (opens new windo
 
 
 <img src="images/image-20210816174757638.png" alt="image-20210816174757638" style="zoom:80%;" />
+
+
+
+# 二、Helloworld
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

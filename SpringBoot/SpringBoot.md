@@ -804,9 +804,7 @@ springboot2.0后`@Configuration`出现了一个新的属性，	`proxyBeanMthodes
 
 比较下列两张图片查看区别
 
-
-
-![未标题-1](C:/Users/admin/Desktop/%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/Cimages/%25E6%259C%25AA%25E6%25A0%2587%25E9%25A2%2598-1.png)
+![未标题-1](images/image-20210713110620186.png)
 
 我们观察图片发现为true的时候加载了一次，而为false的时候加载了两次
 
@@ -1808,7 +1806,7 @@ YAML 是 "YAML Ain't Markup Language"（YAML 不是一种标记语言）的递�
 + '#'表示注释
 + 字符串无需加引号，如果要加，''与""表示字符串内容 会被 转义/不转义
 
-![image-20210118171045271](C:/Users/admin/Desktop/%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/Cimages/image-20210118171045271.png)
+![image-20210118171045271](images/image-20210118171045271.png)
 
 
 
@@ -2425,7 +2423,7 @@ spring.mvc.view.suffix=.jsp
 
 
 
-![image-20210119151032790](C:/Users/admin/Desktop/%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/images/image-20210119151032790.png)
+![image-20210119151032790](/images/image-20210119151032790.png)
 
 
 
@@ -2495,7 +2493,7 @@ public class TestController {
 
 
 
-![image-20210119151136948](C:/Users/admin/Desktop/%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/images/image-20210119151136948.png)
+![image-20210119151136948](/images/image-20210119151136948.png)
 
 
 
@@ -2915,7 +2913,7 @@ public class HiddenHttpMethodFilter extends OncePerRequestFilter {
 
 
 
-![image-20210123150357404](C:/Users/admin/Desktop/%25E5%25AD%25A6%25E4%25B9%25A0%25E7%25AC%2594%25E8%25AE%25B0/images/image-20210123150357404.png)
+![image-20210123150357404](images/image-20210123150357404.png)
 
 
 
