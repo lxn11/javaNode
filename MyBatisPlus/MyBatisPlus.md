@@ -1841,7 +1841,7 @@ https://mp.baomidou.com/guide/safety.html
 > > > - 执行更新时， set version = newVersion where version = oldVersion
 > > > - 如果version不对，就更新失败
 
-
+- **支持的数据类型只有:int,Integer,long,Long,Date,Timestamp,LocalDateTime**
 
 ### 配置类
 
@@ -1871,6 +1871,19 @@ public class MybatisPlusConfig {
     }
 }
 ```
+
+
+
+### pojo
+
+
+
+```java
+    @Version
+    private Integer version;
+```
+
+
 
 
 

@@ -186,7 +186,7 @@ git config --global user.email 616326125@qq.com  **#邮箱**
 
 代码托管中心的任务：维护远程库
 
-<img src="images\image-20200919195433182.png" alt="image-20200919195433182" style="zoom:50%;" />
+<img src="images/image-20200919195433182.png" alt="image-20200919195433182" style="zoom:50%;" />
 
 
 

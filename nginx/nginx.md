@@ -1423,7 +1423,7 @@ source /etc/profile
 (3)执行nginx命令
 
 ```shell
-nginx -V
+
 ```
 
 <img src="images/image-20210630171011141.png" alt="image-20210630171011141" style="zoom:80%;" />

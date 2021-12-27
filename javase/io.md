@@ -2311,7 +2311,7 @@ public class TestDemo {
 
 
 
-# # 四、IO流三
+#  四、IO流三
 
 
 
@@ -2636,8 +2636,9 @@ sex=\u7537
 > + （1）明确要操作的数据是数据源还是数据目的(要读还是要写)
 >
 > 	+ 源：InputStream　　Reader
->          > 	+ 目的：OutputStream　　Writer
->
+>       
+>    > 	+ 目的：OutputStream　　Writer
+>       
 > + （2）明确要操作的设备上的数据是字节还是文本
 >
 >   + 源：
@@ -2648,14 +2649,14 @@ sex=\u7537
 >
 >   + 目的：
 >   	+ 字节：OutputStream
->          
+>
 >          > 		+ 文本：Writer
 >
 > + （3）明确数据所在的具体设备
 >
 > 	+ 源设备：
 >          > 		+ 硬盘：文件 File开头
->                     > 		+ 内存：数组，字符串
+>         	        > 		+ 内存：数组，字符串
 > 		+ 键盘：System.in
 > 		+ 网络：Socket
 >
