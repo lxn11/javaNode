@@ -7258,7 +7258,7 @@ h1{
         <!-- <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut">
                 <h3 v-if="flag">这是一个H3</h3>
         </transition> -->
-        <transition enter-active-class="bounceIn" leave-active-class="bounceOut" :duration:"400">
+        <transition enter-active-class="bounceIn" leave-active-class="bounceOut" :duration="400">
                 <h3 v-if="flag" class="animated">这是一个H3</h3>
         </transition>
     </div>
