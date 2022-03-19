@@ -151,3 +151,18 @@ select object_name,status from user_objects where object_type='PROCEDURE';
 ```sql
 select text from all_source where owner=user and name=upper('&plsql_name');
 ```
+
+
+
+
+
+
+
+# 9、导入DMP文件
+
+
+
+```java
+imp NYBXXZSP/123456@localhost:1521/orcl  full=y  file=G:\xzsp\nybxzsp-hd.dmp ignore=y
+```
+
